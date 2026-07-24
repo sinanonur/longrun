@@ -174,7 +174,7 @@ design, and copy.
 
 | model                  | cost | intelligence | taste |
 |---                     |---   |---           |---    |
-| gemini-3.6-flash (agy) | 8    | 5*           | 4*    |
+| gemini-3.6-flash (agy) | 8    | 7*           | 4*    |
 | gpt-5.6-luna           | 10   | 6            | 4     |
 | gpt-5.6-terra          | 9    | 8            | 5     |
 | gemini-3.1-pro (agy)   | 9    | 7*           | 5*    |
