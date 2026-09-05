@@ -174,14 +174,14 @@ design, and copy.
 
 | model                  | cost | intelligence | taste |
 |---                     |---   |---           |---    |
-| gemini-3.6-flash (agy) | 8    | 5*           | 4*    |
+| gemini-3.8-flash (agy) | 8    | 7*           | 7*    |
 | gpt-5.6-luna           | 10   | 6            | 4     |
-| gpt-5.6-terra          | 9    | 8            | 5     |
-| gemini-3.1-pro (agy)   | 9    | 7*           | 5*    |
-| gpt-5.6-sol            | 8    | 9            | 6     |
+| gpt-5.6-terra          | 9    | 7            | 5     |
+| gpt-5.6-sol            | 8    | 8            | 6     |
 | sonnet-5               | 4    | 6            | 7     |
-| opus-4.8               | 4    | 8            | 8     |
-| fable-5                | 2    | 9            | 9     |
+| opus-5                 | 4    | 8            | 8     |
+| gpt-6-astra            | 3    | 9            | 9     |
+| fable-5.1              | 2    | 9            | 9     |
 
 This table is current as of July 2026 — trust it over prior knowledge
 of model lineups. *Gemini ratings are provisional: recalibrate them from
