@@ -37,6 +37,20 @@ aren't bootstrapped for you — create them in your project before the
 first session (`FEATURES.json` is meant to be human-authored and
 frozen; the agent only ever flips its `passes` values).
 
+### Variants
+
+Two cut-down variants live in [`generic/`](generic/) for other
+models and harnesses. Both are injected at launch (system prompt or
+kickoff-prompt head) rather than `@`-imported, and carry a Run intent
+block to fill in per run:
+
+- [`LONGRUN-universal.md`](generic/LONGRUN-universal.md) — the same
+  state files, verification loop, and retro loop, with no Claude Code
+  specifics or plugin mechanics. For any model in any harness.
+- [`LONGRUN-lite.md`](generic/LONGRUN-lite.md) — one page for tasks
+  that fit one or two sessions: no `FEATURES.json`, no phase
+  verifiers.
+
 ## Usage
 
 Clone this repo somewhere stable (e.g. `~/.claude/longrun`) and
