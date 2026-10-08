@@ -14,7 +14,8 @@ a `CLAUDE.md`-style playbook you drop into a project so the agent can:
   verification, silently retrying the same failure, or scope-creeping
   mid-run.
 - **Route work to the right model** instead of always using the most
-  expensive one — a scored table (cost / intelligence / taste) plus
+  expensive one — a scored table (cost, intelligence, agentic coding,
+  knowledge, research, design/arch, taste) plus
   rules for when to delegate vs. keep judgment calls in the main
   session.
 - **Bridge to other model families from inside Claude Code**: GPT via
@@ -28,8 +29,8 @@ a `CLAUDE.md`-style playbook you drop into a project so the agent can:
   approval.
 
 Before you adopt it, edit the playbook to fit your setup: the model
-roster table and its cost/intelligence/taste scores are the author's
-opinion as of a point in time and will go stale as models change, and
+roster table and its scores are the author's reading of public
+benchmarks as of a point in time and will go stale as models change, and
 a couple of paths (`~/.codex/config.toml`, `~/bin/codex-usage`,
 `codex-companion.mjs`) are personal-environment references you'll want
 to replace or remove. `TASKS.md`, `FEATURES.json`, and `LOG.md` also

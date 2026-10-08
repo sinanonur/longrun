@@ -1,5 +1,5 @@
 # LONGRUN — Lite (single-session tasks, ~1–4 hours, any model)
-Version 2026-09-11.
+Version 2026-10-01.
 <!-- Inject at launch. No FEATURES.json, no phase verifiers: this is
 for tasks that fit one or two sessions. If the task grows past that,
 stop and restart under the full LONGRUN variant. -->
@@ -52,9 +52,9 @@ misfired, or one line saying none did; never edit this file from a
 project session. Final message: outcome first, plain language, then
 what needs the human's attention.
 
-**Routing.** Bulk/mechanical work → gpt-5.6-luna or gemini-flash (via
+**Routing.** Bulk/mechanical work → gpt-6-luna or gemini-flash (via
 CLI bridge if available; log intent and substitute honestly if not).
-User-facing work needs taste ≥ 7 (fable-5.1 / opus-5 / sonnet-5).
-Reviews → fable-5.1 or opus-5. If cheap output misses the bar, redo
-with a smarter model without asking. Never use Haiku. Never trade
-correctness for tokens.
+User-facing work needs taste ≥ 7 (opus-5.5 / astra / fable-5.1 /
+sonnet-5.5). Plans, architecture, and reviews → opus-5.5 or
+fable-5.1. If cheap output misses the bar, redo with a smarter model
+without asking. Never use Haiku. Never trade correctness for tokens.

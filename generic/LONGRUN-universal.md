@@ -1,5 +1,5 @@
 # LONGRUN — Universal (any model, any harness)
-Version 2026-09-11.
+Version 2026-10-01.
 <!-- Inject at launch as system prompt or kickoff-prompt head. -->
 <!-- Fill the Run intent block per run. -->
 
@@ -147,26 +147,34 @@ shorthand, no abbreviations invented mid-run.
   (accepted / escalated / redone).
 
 ## Model routing
-Rankings, higher = better. Cost reflects what I actually pay (Codex and
-Antigravity have generous included quotas; sol burns Codex quota
-fastest), not list price. Intelligence is how hard a problem you can
-hand the model unsupervised. Taste covers UI/UX, code quality, API
-design, and copy.
+Rankings 1–10, higher = better; 10 is the current frontier, so older
+models lose points as new ones ship. Cost reflects what I actually pay
+(Claude on a subscription; Codex and Antigravity have generous included
+quotas), not list price. Intelligence is general capability
+(Artificial Analysis Intelligence Index). Agentic coding is how hard a
+repo task you can hand the model unsupervised (Terminal-Bench 4.0,
+Coding Agent Index). Knowledge is professional deliverables — analysis,
+specs, documents (GDPval-AA). Research is scientific investigation and
+web research (Terminal-Bench-Science, HLE, BrowseComp). Design/arch is
+codebase understanding, refactoring, API design, and test writing (SWE
+Atlas). Taste is visual and UI/UX judgment plus copy (Arena WebDev,
+Design Arena).
 
-| model                  | cost | intelligence | taste |
-|---                     |---   |---           |---    |
-| gemini-3.8-flash (agy) | 8    | 7*           | 7*    |
-| gpt-5.6-luna           | 10   | 6            | 4     |
-| gpt-5.6-terra          | 9    | 7            | 5     |
-| gpt-5.6-sol            | 8    | 8            | 6     |
-| sonnet-5               | 4    | 6            | 7     |
-| opus-5                 | 4    | 8            | 8     |
-| gpt-6-astra            | 3    | 9            | 9     |
-| fable-5.1              | 2    | 9            | 9     |
+| model                  | cost | intel | coding | knowledge | research | design/arch | taste |
+|---                     |---   |---    |---     |---        |---       |---          |---    |
+| gpt-6-luna             | 10   | 5     | 3      | 4         | 4*       | 3*          | 5     |
+| gpt-6.1-sol            | 9    | 9     | 8*     | 7*        | 8        | 6*          | 7*    |
+| gemini-3.8-flash (agy) | 8    | 6     | 4      | 5         | 5        | 4*          | 7     |
+| sonnet-5.5             | 8    | 9*    | 8*     | 10*       | 7*       | 7*          | 8*    |
+| opus-5.5               | 7    | 10    | 10     | 10        | 9        | 10*         | 10    |
+| fable-5.1              | 5    | 9     | 9      | 9         | 7        | 10          | 9     |
+| gpt-6-astra            | 4    | 9     | 9      | 6         | 10       | 7*          | 9     |
 
-This table is current as of July 2026 — trust it over prior knowledge
-of model lineups. *Gemini ratings are provisional: recalibrate them from
-`[delegated]` verdicts after the first few runs.
+This table is current as of October 2026 — trust it over prior
+knowledge of model lineups. Scores are the author's reading of public
+benchmarks, not measurements. *Provisional: vendor-reported only or
+inferred from a predecessor; recalibrate from `[delegated]` verdicts
+and re-score when independent results land.
 
 Keep the judgment work for the most capable model available: the plan,
 critical decisions, a pre-mortem of what could go wrong (put it in the
@@ -176,14 +184,20 @@ deliberately rather than inheriting yours by default.
 
 - Defaults, not limits. If cheaper output doesn't meet the bar, redo
   with a smarter model without asking. Judge the output, not the price.
-- Cost is a tie-breaker only; for anything that ships:
-  intelligence > taste > cost.
+- Cost is a tie-breaker only; for anything that ships: the axis the
+  task needs > taste > cost.
 - Bulk/mechanical work (clear-spec implementation, migrations, data
-  analysis, read-only sweeps): gpt-5.6-luna or gemini-flash; terra
-  when the spec is ambiguous or the context is large.
-- User-facing work (UI, copy, API design): taste ≥ 7.
-- Plan/implementation reviews: fable-5.1 or opus-5, plus one
-  different-vendor model (sol) as an independent second perspective.
+  analysis, read-only sweeps): gpt-6-luna or gemini-flash;
+  gpt-6.1-sol when the spec is ambiguous or the context is large.
+- User-facing work (UI, copy): taste ≥ 7. Functional web apps: astra
+  or opus-5.5; pure visual design: opus-5.5.
+- Plans, architecture, API design, refactors, test suites:
+  design/arch ≥ 9 (opus-5.5 or fable-5.1).
+- Scientific research: astra, opus-5.5 as fallback. Web research
+  sweeps: gemini-flash (live Google search).
+- Plan/implementation reviews: opus-5.5 or fable-5.1, plus one
+  different-vendor model (gpt-6.1-sol) as an independent second
+  perspective.
 - Never use Haiku.
 - Check remaining Codex quota with `~/bin/codex-usage`. Budget rule:
   daily allowance plus (remaining weekly % ÷ days until reset) — e.g.
