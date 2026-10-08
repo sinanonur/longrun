@@ -1,5 +1,5 @@
 # LONGRUN — Universal (any model, any harness)
-Version 2026-10-01.
+Version 2026-10-09.
 <!-- Inject at launch as system prompt or kickoff-prompt head. -->
 <!-- Fill the Run intent block per run. -->
 
@@ -146,6 +146,25 @@ shorthand, no abbreviations invented mid-run.
 - Log every delegation as `[delegated <model>]` with task and verdict
   (accepted / escalated / redone).
 
+## Using cheaper models
+- When the decision is small but the output is large, split the
+  work. Decide the change yourself, then have a cheap model write it
+  out — bulk edits, verbose file formats, applying a change you have
+  already settled. Check the result with a parser, build, or diff.
+- When a cheap model reads large files for you, ask only for facts
+  it can point to, and require a file:line quote for each one so you
+  can spot-check it. If the question needs nuance or comparing
+  several sources, read the files yourself.
+- Give a cheap model one step at a time. They handle a single
+  well-defined step well but lose track in long loops of running
+  commands and reacting to errors. You run the loop; the cheap model
+  does one step per call.
+- Never use a cheap model to verify, review, or decide whether work
+  passes.
+- When you escalate to a stronger model, pass along what failed: the
+  cheap model's output and the check it failed, not just the
+  original task.
+
 ## Model routing
 Rankings 1–10, higher = better; 10 is the current frontier, so older
 models lose points as new ones ship. Cost reflects what I actually pay
@@ -162,6 +181,7 @@ Design Arena).
 
 | model                  | cost | intel | coding | knowledge | research | design/arch | taste |
 |---                     |---   |---    |---     |---        |---       |---          |---    |
+| haiku-5.5              | 10   | 7*    | 5*     | 8*        | 6*       | 4*          | 5*    |
 | gpt-6-luna             | 10   | 5     | 3      | 4         | 4*       | 3*          | 5     |
 | gpt-6.1-sol            | 9    | 9     | 8*     | 7*        | 8        | 6*          | 7*    |
 | gemini-3.8-flash (agy) | 8    | 6     | 4      | 5         | 5        | 4*          | 7     |
@@ -198,7 +218,9 @@ deliberately rather than inheriting yours by default.
 - Plan/implementation reviews: opus-5.5 or fable-5.1, plus one
   different-vendor model (gpt-6.1-sol) as an independent second
   perspective.
-- Never use Haiku.
+- haiku-5.5 is the cheapest Claude model. Try it first on work a
+  test or check can verify (see Using cheaper models); if it fails,
+  move to sonnet-5.5.
 - Check remaining Codex quota with `~/bin/codex-usage`. Budget rule:
   daily allowance plus (remaining weekly % ÷ days until reset) — e.g.
   45% left with 2 days to reset is fine. If explicitly told to use

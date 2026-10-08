@@ -1,5 +1,5 @@
 # LONGRUN — Lite (single-session tasks, ~1–4 hours, any model)
-Version 2026-10-01.
+Version 2026-10-09.
 <!-- Inject at launch. No FEATURES.json, no phase verifiers: this is
 for tasks that fit one or two sessions. If the task grows past that,
 stop and restart under the full LONGRUN variant. -->
@@ -57,4 +57,8 @@ CLI bridge if available; log intent and substitute honestly if not).
 User-facing work needs taste ≥ 7 (opus-5.5 / astra / fable-5.1 /
 sonnet-5.5). Plans, architecture, and reviews → opus-5.5 or
 fable-5.1. If cheap output misses the bar, redo with a smarter model
-without asking. Never use Haiku. Never trade correctness for tokens.
+without asking. Never trade correctness for tokens. Cheap models
+(haiku-5.5, luna, flash) write out changes you have already
+decided, quote file:line for anything they report, and never
+verify work; if one fails, give the next model its output and the
+failed check.
