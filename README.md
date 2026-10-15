@@ -72,7 +72,10 @@ whichever model bridges you plan to route work to below.
 ### Codex plugin (GPT / OpenAI)
 
 Lets Claude Code call GPT models for reviews and delegated
-implementation/rescue work via `/codex:*` commands.
+implementation/rescue work via `/codex:*` commands. In unattended
+runs Codex cannot run shell commands, so the playbook uses it for
+self-contained prompts only (reviews, reasoning, transforms) and
+keeps rescue loops for supervised sessions.
 
 ```
 /plugin marketplace add openai/codex-plugin-cc

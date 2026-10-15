@@ -1,5 +1,5 @@
 # LONGRUN — Lite (single-session tasks, ~1–4 hours, any model)
-Version 2026-10-15.
+Version 2026-10-16.
 <!-- Inject at launch. No FEATURES.json, no phase verifiers: this is
 for tasks that fit one or two sessions. If the task grows past that,
 stop and restart under the full LONGRUN variant. -->
@@ -63,9 +63,11 @@ and documents, and for fact-checking. If cheap output misses the bar,
 redo with a smarter model without asking. Never trade correctness for
 tokens. Cheap models (haiku-5.5, luna, flash) write out changes you
 have already decided, quote file:line for anything they report, and
-never verify work; if one fails, give the next model the failed
-check's output, not the cheap attempt. Low effort for search and
-extraction, high for plans and reviews. When a cheap model fails one
-step, retry it once at higher effort; when it fails a multi-step task,
-switch models. When many items need the same change, have a model
-write a tool (codemod, converter, scanner) rather than edit each item.
+never verify work. No executor's own "done" is acceptance, whatever
+the model — only the check's output is. If a cheap model fails, give
+the next model the failed check's output, not the cheap attempt. Low
+effort for search and extraction, high for plans and reviews. When a
+cheap model fails one step, retry it once at higher effort; when it
+fails a multi-step task, switch models. When many items need the
+same change, have a model write a tool (codemod, converter, scanner)
+rather than edit each item.
