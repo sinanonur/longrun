@@ -199,7 +199,8 @@ first — never delegate ambiguity.
   judgment of the task's real depth, and keep it on the strong tier:
   yourself, or an opus-5.5 subagent whose diff you review.
 - Anything taste-sensitive (UI, copy) needs taste ≥ 7, and API
-  design needs design/arch ≥ 9, regardless of spec detail.
+  design goes to the best design/arch model available, regardless of
+  spec detail.
 - Work you'd finish in <5 tool calls: just do it (overhead exceeds
   savings); the one exception is bulk output that haiku-5.5 can
   write in-harness. >15 tool calls of well-spec'd mechanical work:
@@ -353,13 +354,12 @@ judging other agents' output) or design directly; the `[delegated]`
 log is the best evidence for recalibrating them.
 
 Routing rules:
-- Orchestrator (the main session): the best-fit judgment model, not
-  a fixed one. Default opus-5.5 (first on the independent Agent
-  Arena lead-model ranking, and cheaper per task than fable-5.1);
-  gpt-6.1-sol and fable-5.1 are close behind and fine when they fit
-  better or quota is short. Never haiku-5.5, luna, or gemini-flash:
-  they rank last by a wide margin. Whatever runs
-  the session keeps the judgment work listed under Division of labor.
+- Orchestrator (the main session): the best available orchestrator
+  whenever budget allows: opus-5.5, first on the independent Agent
+  Arena lead-model ranking. Drop to gpt-6.1-sol or fable-5.1, close
+  behind, only when Opus quota is short. Never haiku-5.5, luna, or
+  gemini-flash: they rank last by a wide margin. Whatever runs the
+  session keeps the judgment work listed under Division of labor.
   Vary its effort freely; change its model only at a compaction
   boundary, since a new model must re-read the whole context.
 - To get a stronger model's view mid-run, consult it: one bounded
@@ -386,9 +386,16 @@ Routing rules:
 - Anything user-facing (UI, copy) needs taste ≥ 7. Functional web
   apps: astra or opus-5.5; pure visual design: opus-5.5.
 - Plans, architecture, API design, refactors, and test design (what
-  to test, and how to tell a right answer from a wrong one) need
-  design/arch ≥ 9: opus-5.5 or fable-5.1. Writing the test bodies
-  routes like any other implementation.
+  to test, and how to tell a right answer from a wrong one): use the
+  highest design/arch model in the table that quota allows. Writing
+  the test bodies routes like any other implementation.
+- For architecture and other hard-to-revert designs, get independent
+  designs from two or three of the top design/arch models, from
+  different vendors where possible (e.g. opus-5.5, gemini-4-argon,
+  sonnet-5.5). Give each the same brief and none of the others'
+  drafts; then compare them, take the best parts, and log the
+  combined design as a `[decision]` with the alternatives and why
+  they lost. Different models miss different things.
 - Hardest unsupervised repo-scale changes: opus-5.5. Hard
   terminal/ops/agentic loops: astra matches it; gpt-6.1-sol at lower
   cost. In unattended runs these loops stay on Claude models: Codex
@@ -406,9 +413,12 @@ Routing rules:
   review and reasoning work when Codex quota runs out. Not for
   orchestration, hard coding or terminal loops, high-volume fan-out,
   computer use, or anything latency-sensitive.
-- Reviews of plans/implementations: opus-5.5 or fable-5.1, plus one
-  different-vendor model (gpt-6.1-sol) as an independent second
-  perspective — different training catches different misses.
+- Reviews of plans and implementations: the best available model in
+  the table on the axis under review (design/arch for plans, coding
+  for implementations) with reliability ≥ 7, plus one model from a
+  different vendor as an independent second perspective (gpt-6.1-sol
+  for code, gemini-4-argon for plans and documents) — different
+  training catches different misses.
 - haiku-5.5 is the cheap model inside Claude Code. Try it first on
   work a test or check can verify (see Using cheaper models); if it
   fails, move to sonnet-5.5.

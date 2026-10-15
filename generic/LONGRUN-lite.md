@@ -55,15 +55,17 @@ what needs the human's attention.
 **Routing.** Bulk/mechanical work → gpt-6-luna or gemini-flash (via
 CLI bridge if available; log intent and substitute honestly if not).
 User-facing work needs taste ≥ 7 (opus-5.5 / astra / fable-5.1 /
-sonnet-5.5). Plans, architecture, and reviews → opus-5.5 or fable-5.1;
-gemini-4-argon as a second-vendor reviewer for plans and documents,
-and for fact-checking. If cheap output misses the bar, redo with a
-smarter model without asking. Never trade correctness for tokens.
-Cheap models (haiku-5.5, luna, flash) write out changes you have
-already decided, quote file:line for anything they report, and never
-verify work; if one fails, give the next model the failed check's
-output, not the cheap attempt. Low effort for search and extraction,
-high for plans and reviews. When a cheap model fails one step, retry
-it once at higher effort; when it fails a multi-step task, switch
-models. When many items need the same change, have a model write a
-tool (codemod, converter, scanner) rather than edit each item.
+sonnet-5.5). Plans and architecture → the best design/arch model
+available; for hard-to-revert designs, combine independent drafts from
+two or three of them. Reviews → the best available model for what is
+reviewed, with gemini-4-argon as a second-vendor reviewer for plans
+and documents, and for fact-checking. If cheap output misses the bar,
+redo with a smarter model without asking. Never trade correctness for
+tokens. Cheap models (haiku-5.5, luna, flash) write out changes you
+have already decided, quote file:line for anything they report, and
+never verify work; if one fails, give the next model the failed
+check's output, not the cheap attempt. Low effort for search and
+extraction, high for plans and reviews. When a cheap model fails one
+step, retry it once at higher effort; when it fails a multi-step task,
+switch models. When many items need the same change, have a model
+write a tool (codemod, converter, scanner) rather than edit each item.

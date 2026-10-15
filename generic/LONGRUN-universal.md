@@ -301,10 +301,11 @@ deliberately rather than inheriting yours by default.
 - Per task: the executor's model and effort, using how earlier tasks
   went. When a test harness or contract suite makes a kind of work
   strongly verifiable, later tasks of that kind can drop a tier.
-- Orchestrator: default opus-5.5 (first on the independent Agent
-  Arena lead-model ranking); gpt-6.1-sol and fable-5.1 are close
-  behind. Never haiku-5.5, luna, or gemini-flash: they rank last by a
-  wide margin.
+- Orchestrator: the best available one whenever budget allows:
+  opus-5.5, first on the independent Agent Arena lead-model ranking.
+  Drop to gpt-6.1-sol or fable-5.1, close behind, only when Opus
+  quota is short. Never haiku-5.5, luna, or gemini-flash: they rank
+  last by a wide margin.
 - Vary the orchestrator's effort freely; change its model only at a
   compaction boundary, since a new model must re-read the whole
   context. To get a stronger model's view mid-run, consult it: one
@@ -323,10 +324,17 @@ deliberately rather than inheriting yours by default.
   gemini-flash, and not fable-5.1 for fact-checks.
 - User-facing work (UI, copy): taste ≥ 7. Functional web apps: astra
   or opus-5.5; pure visual design: opus-5.5.
-- Plans, architecture, API design, refactors, test design (what to
-  test, and how to tell a right answer from a wrong one):
-  design/arch ≥ 9 (opus-5.5 or fable-5.1). Writing the test bodies
-  routes like any other implementation.
+- Plans, architecture, API design, refactors, and test design (what
+  to test, and how to tell a right answer from a wrong one): use the
+  highest design/arch model in the table that quota allows. Writing
+  the test bodies routes like any other implementation.
+- For architecture and other hard-to-revert designs, get independent
+  designs from two or three of the top design/arch models, from
+  different vendors where possible (e.g. opus-5.5, gemini-4-argon,
+  sonnet-5.5). Give each the same brief and none of the others'
+  drafts; then compare them, take the best parts, and log the
+  combined design as a `[decision]` with the alternatives and why
+  they lost. Different models miss different things.
 - Scientific research: astra, opus-5.5 as fallback. Web research
   sweeps: gemini-flash (live Google search).
 - gemini-4-argon is strong at knowledge work (specs,
@@ -339,9 +347,12 @@ deliberately rather than inheriting yours by default.
   review and reasoning work when Codex quota runs out. Not for
   orchestration, hard coding or terminal loops, high-volume fan-out,
   computer use, or anything latency-sensitive.
-- Plan/implementation reviews: opus-5.5 or fable-5.1, plus one
-  different-vendor model (gpt-6.1-sol) as an independent second
-  perspective.
+- Reviews of plans and implementations: the best available model in
+  the table on the axis under review (design/arch for plans, coding
+  for implementations) with reliability ≥ 7, plus one model from a
+  different vendor as an independent second perspective (gpt-6.1-sol
+  for code, gemini-4-argon for plans and documents) — different
+  training catches different misses.
 - haiku-5.5 is the cheapest Claude model. Try it first on work a
   test or check can verify (see Using cheaper models); if it fails,
   move to sonnet-5.5.
