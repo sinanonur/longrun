@@ -1,5 +1,5 @@
 # LONGRUN — Fable 5 / Claude Code
-Version 2026-10-12.
+Version 2026-10-15.
 
 ## Operating context
 You are the orchestrating model running a long development task with
@@ -309,37 +309,56 @@ models lose points as new ones ship. Cost reflects what I actually pay
 included quotas), not list price. Intelligence is general capability
 (Artificial Analysis Intelligence Index). Agentic coding is how hard a
 repo task you can hand the model unsupervised (Terminal-Bench 4.0,
-Coding Agent Index). Knowledge is professional deliverables — analysis,
-specs, documents (GDPval-AA). Research is scientific investigation and
-web research (Terminal-Bench-Science, HLE, BrowseComp). Design/arch is
-codebase understanding, refactoring, API design, and test writing (SWE
-Atlas). Taste is visual and UI/UX judgment plus copy (Arena WebDev,
-Design Arena).
+Coding Agent Index). Knowledge is the quality of professional
+deliverables — analysis, specs, reports — as judged by experts
+(GDPval-AA, AA-Briefcase). Reliability is getting facts and actions
+right and abstaining when unsure (AA hallucination rate,
+AutomationBench-AA, Vals Index). Research is scientific investigation
+and web research (Terminal-Bench-Science, HLE, BrowseComp).
+Design/arch is judgment on architecture, API design, and tradeoffs; no
+benchmark measures that, so the scores are the author's opinion,
+informed by codebase understanding, refactoring, and test writing
+(Vals Code Migration, SWE Atlas). Taste is visual and UI/UX judgment
+plus copy (Arena WebDev, Design Arena).
 
-| model                  | cost | intel | coding | knowledge | research | design/arch | taste |
-|---                     |---   |---    |---     |---        |---       |---          |---    |
-| haiku-5.5              | 10   | 7*    | 5*     | 8*        | 6*       | 4*          | 5*    |
-| gpt-6-luna             | 10   | 5     | 3      | 4         | 4*       | 3*          | 5     |
-| gpt-6.1-sol            | 9    | 9     | 8*     | 7*        | 8        | 6*          | 7*    |
-| gemini-3.8-flash (agy) | 8    | 6     | 4      | 5         | 5        | 4*          | 7     |
-| sonnet-5.5             | 8    | 9*    | 8*     | 10*       | 7*       | 7*          | 8*    |
-| opus-5.5               | 7    | 10    | 10     | 10        | 9        | 10*         | 10    |
-| fable-5.1              | 5    | 9     | 9      | 9         | 7        | 10          | 9     |
-| gpt-6-astra            | 4    | 9     | 9      | 6         | 10       | 7*          | 9     |
+| model                  | cost | intel | coding | knowledge | reliability | research | design/arch | taste |
+|---                     |---   |---    |---     |---        |---          |---       |---          |---    |
+| haiku-5.5              | 10   | 7*    | 5*     | 7         | 5           | 4        | 4*          | 5*    |
+| gpt-6-luna             | 10   | 5     | 3      | 4         | 4           | 4*       | 3*          | 5     |
+| gpt-6.1-sol            | 9    | 9     | 8*     | 6         | 7           | 8        | 8*          | 7*    |
+| gemini-3.8-flash (agy) | 8    | 6     | 4      | 3         | 5           | 5        | 4*          | 5     |
+| sonnet-5.5             | 8    | 9*    | 9      | 10        | 7           | 9        | 9*          | 8*    |
+| gemini-4-argon (agy)   | 8    | 9     | 8      | 6         | 9*          | 8*       | 9*          | 8*    |
+| opus-5.5               | 7    | 10    | 10     | 10        | 7           | 9        | 10*         | 10    |
+| fable-5.1              | 5    | 9     | 9      | 8         | 6           | 8        | 9*          | 9     |
+| gpt-6-astra            | 4    | 9     | 9      | 6         | 8           | 10       | 8*          | 9     |
 
 This table is current as of October 2026 — trust it over prior
 knowledge of model lineups. Scores are the author's reading of public
 benchmarks, not measurements. *Provisional: vendor-reported only or
 inferred from a predecessor; recalibrate from `[delegated]` verdicts
-and re-score when independent results land. Independent FrontierSWE
-v2 (max effort) puts fable-5.1 at 56.3, below astra 65.5, opus-5.5
-62.3, and sonnet-5.5 61.9.
+and re-score when independent results land. Independent FrontierSWE v2
+(max effort) puts fable-5.1 at 56.3, below astra 65.5, opus-5.5 62.3,
+and sonnet-5.5 61.9. gemini-4-argon (broad rollout 2026-10-13, Google
+AI Ultra plan) scores 53 on the independent Artificial Analysis index,
+has the lowest hallucination rate among top models (15%), and ranks
+first on the Vals Index and AutomationBench-AA, but trails opus-5.5
+and astra on FrontierSWE v2 (55.0) and Terminal-Bench 4.0 (57). It is
+slow (about 45 s to the first token) and verbose. Knowledge and
+reliability rank models differently: opus-5.5 and sonnet-5.5 write the
+best deliverables but guess rather than abstain (hallucination rates
+59% and 47%), while gemini-4-argon (15%) and astra lead on
+reliability. No benchmark measures orchestration (delegation, routing,
+judging other agents' output) or design directly; the `[delegated]`
+log is the best evidence for recalibrating them.
 
 Routing rules:
 - Orchestrator (the main session): the best-fit judgment model, not
-  a fixed one. Default opus-5.5 (it leads the independent index and
-  costs less per task than fable-5.1); fable-5.1 or gpt-6.1-sol are
-  fine when they are the better fit or quota is short. Whatever runs
+  a fixed one. Default opus-5.5 (first on the independent Agent
+  Arena lead-model ranking, and cheaper per task than fable-5.1);
+  gpt-6.1-sol and fable-5.1 are close behind and fine when they fit
+  better or quota is short. Never haiku-5.5, luna, or gemini-flash:
+  they rank last by a wide margin. Whatever runs
   the session keeps the judgment work listed under Division of labor.
   Vary its effort freely; change its model only at a compaction
   boundary, since a new model must re-read the whole context.
@@ -361,6 +380,9 @@ Routing rules:
   whichever quota is healthier. Escalate to gpt-6.1-sol when the spec
   is ambiguous or the context is large — flash and luna both degrade
   on long context.
+- Fact-checking, accepting a model's own report, and actions run
+  unattended need reliability ≥ 7: not haiku-5.5, luna, or
+  gemini-flash, and not fable-5.1 for fact-checks.
 - Anything user-facing (UI, copy) needs taste ≥ 7. Functional web
   apps: astra or opus-5.5; pure visual design: opus-5.5.
 - Plans, architecture, API design, refactors, and test design (what
@@ -374,6 +396,16 @@ Routing rules:
   gets self-contained review prompts only.
 - Scientific research: astra, opus-5.5 as fallback. Web research
   sweeps: gemini-flash via agy (live Google search).
+- gemini-4-argon (via agy) is strong at knowledge work (specs,
+  analysis, documents), factual reliability (it abstains rather than
+  invents), long outputs, and image, chart, and video input. Use it as
+  the second cross-vendor reviewer for plans, specs, and documents
+  (gpt-6.1-sol stays the code reviewer); for research and
+  fact-checking where a made-up claim is costly; for knowledge
+  deliverables when opus-5.5 quota is short; and as the fallback for
+  review and reasoning work when Codex quota runs out. Not for
+  orchestration, hard coding or terminal loops, high-volume fan-out,
+  computer use, or anything latency-sensitive.
 - Reviews of plans/implementations: opus-5.5 or fable-5.1, plus one
   different-vendor model (gpt-6.1-sol) as an independent second
   perspective — different training catches different misses.
@@ -382,7 +414,7 @@ Routing rules:
   fails, move to sonnet-5.5.
 - Claude models (haiku-5.5, sonnet-5.5, opus-5.5, fable-5.1) run via
   the Agent/Workflow model parameter; GPT via the codex plugin; Gemini
-  via the antigravity plugin (mechanics below).
+  (flash, argon) via the antigravity plugin (mechanics below).
 
 ### Reasoning effort
 - Effort helps on hard multi-step work and the hardest reasoning. On
@@ -444,7 +476,8 @@ Routing rules:
 - Check remaining quota with `~/bin/codex-usage`. Budget rule: daily
   allowance plus (remaining weekly % ÷ days until reset) — e.g. 45%
   left with 2 days to reset is fine. On quota exhaustion, stop using
-  Codex models for an hour and route to Gemini tiers instead.
+  Codex models for an hour and route to Gemini instead: argon for
+  review and reasoning, flash for bulk.
 - Headless caveat: Codex's bwrap sandbox cannot exec shell commands in
   background sessions (`bwrap: loopback: Failed RTM_NEWADDR`). Embed
   everything to review (diff, files, specs) in a self-contained prompt
@@ -455,7 +488,9 @@ Routing rules:
 - Runs via the `antigravity-for-claude-code` plugin wrapping the `agy`
   CLI. Included quota makes this the cheapest route for bulk work.
   Tiers: `flash` (default, 3.8 Flash), `flash-lo` (trivial work),
-  `pro` (Gemini Pro, harder reasoning).
+  `pro` (Gemini Pro, harder reasoning). gemini-4-argon needs the
+  Google AI Ultra plan; confirm its name with `agy models` before
+  routing to it, and expect rate limits (429s) in its first weeks.
 - Commands:
   - `/antigravity:delegate [--tier flash|pro] <task>` — execution;
     file writes go through the antigravity-delegate subagent so they

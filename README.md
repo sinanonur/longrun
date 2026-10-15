@@ -15,7 +15,7 @@ a `CLAUDE.md`-style playbook you drop into a project so the agent can:
   mid-run.
 - **Route work to the right model** instead of always using the most
   expensive one — a scored table (cost, intelligence, agentic coding,
-  knowledge, research, design/arch, taste) plus
+  knowledge, reliability, research, design/arch, taste) plus
   rules for when to delegate vs. keep judgment calls in the main
   session.
 - **Bridge to other model families from inside Claude Code**: GPT via
@@ -105,7 +105,9 @@ Google-grounded research to Gemini via the `agy` CLI, through
 
 Requires the Antigravity CLI (`agy`), installed and authenticated
 separately — `/antigravity:setup` checks this for you, and `agy
-models` should list Gemini models once auth is done:
+models` should list Gemini models once auth is done. Gemini 4 Argon,
+which the playbook uses for document review and fact-checking, needs
+a Google AI Ultra plan:
 
 ```bash
 curl -fsSL https://antigravity.google/cli/install.sh | bash
