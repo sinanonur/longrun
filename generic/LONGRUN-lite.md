@@ -1,5 +1,5 @@
 # LONGRUN — Lite (single-session tasks, ~1–4 hours, any model)
-Version 2026-10-16.
+Version 2026-11-18.
 <!-- Inject at launch. No FEATURES.json, no phase verifiers: this is
 for tasks that fit one or two sessions. If the task grows past that,
 stop and restart under the full LONGRUN variant. -->
@@ -52,16 +52,16 @@ misfired, or one line saying none did; never edit this file from a
 project session. Final message: outcome first, plain language, then
 what needs the human's attention.
 
-**Routing.** Bulk/mechanical work → gpt-6-luna or gemini-flash (via
+**Routing.** Bulk/mechanical work → gpt-6-luna or gemini-hydrogen (via
 CLI bridge if available; log intent and substitute honestly if not).
-User-facing work needs taste ≥ 7 (opus-5.5 / astra / fable-5.1 /
+User-facing work needs taste ≥ 7 (opus-5.5 / fable-5.2 / astra /
 sonnet-5.5). Plans and architecture → the best design/arch model
 available; for hard-to-revert designs, combine independent drafts from
 two or three of them. Reviews → the best available model for what is
 reviewed, with gemini-4-argon as a second-vendor reviewer for plans
 and documents, and for fact-checking. If cheap output misses the bar,
 redo with a smarter model without asking. Never trade correctness for
-tokens. Cheap models (haiku-5.5, luna, flash) write out changes you
+tokens. Cheap models (haiku-5.5, luna, hydrogen) write out changes you
 have already decided, quote file:line for anything they report, and
 never verify work. No executor's own "done" is acceptance, whatever
 the model — only the check's output is. If a cheap model fails, give
