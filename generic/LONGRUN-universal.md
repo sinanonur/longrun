@@ -1,5 +1,5 @@
 # LONGRUN — Universal (any model, any harness)
-Version 2026-10-16.
+Version 2026-11-18.
 <!-- Inject at launch as system prompt or kickoff-prompt head. -->
 <!-- Fill the Run intent block per run. -->
 
@@ -194,7 +194,7 @@ shorthand, no abbreviations invented mid-run.
 - When a task is hard up front (multi-file, ambiguous edges, an area
   that already needed escalation), skip the cheap attempt and route it
   to the strong tier directly. Use at most two tiers per task. The
-  cheap tier is haiku-5.5, luna, and gemini-flash; the strong tier is
+  cheap tier is haiku-5.5, luna, and gemini-hydrogen; the strong tier is
   sonnet-5.5, opus-5.5, or yourself — opus-5.5 or yourself where
   verification is weak or the blast radius high.
 - Verifiers run on sonnet-5.5 by default and opus-5.5 for
@@ -212,7 +212,7 @@ shorthand, no abbreviations invented mid-run.
   (accepted / escalated / redone).
 - When a safety fallback or pause fires (a request rerouted to
   another model, a refusal with no fallback, a paused task), log which
-  model actually produced the result. Prefer opus-5.5 or gpt-6.1-sol
+  model actually produced the result. Prefer opus-5.5 or gpt-6.2-sol
   over astra for long unattended security-adjacent work, since
   astra's pauses stop API tasks.
 
@@ -226,7 +226,7 @@ shorthand, no abbreviations invented mid-run.
   can spot-check it. If the question needs nuance or comparing
   several sources, read the files yourself.
 - Match the delegation to the task's shape. Bulk transforms and
-  cheap models reached through another vendor (luna, gemini-flash)
+  cheap models reached through another vendor (luna, gemini-hydrogen)
   get one well-defined step per call: they lose track in long loops
   of running commands and reacting to errors, so you run the loop. A
   cheap sub-task on a scoped leaf task in its own worktree may run
@@ -248,7 +248,7 @@ shorthand, no abbreviations invented mid-run.
   sweep to account for every baseline hit.
 - Choosing among cheap models for bulk work: haiku-5.5 when the work
   needs the repo's tools or comes in small batches; luna or
-  gemini-flash for large fan-out or to spread quota; gemini-flash
+  gemini-hydrogen for large fan-out or to spread quota; gemini-hydrogen
   when it needs live search.
 - Before escalating, read the failing check yourself: if the spec or
   a contract test is the bug, fix it and restart the ladder rather
@@ -271,8 +271,8 @@ models lose points as new ones ship. Cost reflects what I actually pay
 (Claude on a subscription; Codex and Antigravity have generous
 included quotas), not list price. Intelligence is general capability
 (Artificial Analysis Intelligence Index). Agentic coding is how hard a
-repo task you can hand the model unsupervised (Terminal-Bench 4.0,
-Coding Agent Index). Knowledge is the quality of professional
+repo task you can hand the model unsupervised (Terminal-Bench 4.1,
+Coding Agent Index v2.1). Knowledge is the quality of professional
 deliverables — analysis, specs, reports — as judged by experts
 (GDPval-AA, AA-Briefcase). Reliability is getting facts and actions
 right and abstaining when unsure (AA hallucination rate,
@@ -284,36 +284,57 @@ informed by codebase understanding, refactoring, and test writing
 (Vals Code Migration, SWE Atlas). Taste is visual and UI/UX judgment
 plus copy (Arena WebDev, Design Arena).
 
-| model                  | cost | intel | coding | knowledge | reliability | research | design/arch | taste |
-|---                     |---   |---    |---     |---        |---          |---       |---          |---    |
-| haiku-5.5              | 10   | 7*    | 5*     | 7         | 5           | 4        | 4*          | 5*    |
-| gpt-6-luna             | 10   | 5     | 3      | 4         | 4           | 4*       | 3*          | 5     |
-| gpt-6.1-sol            | 9    | 9     | 8*     | 6         | 7           | 8        | 8*          | 7*    |
-| gemini-3.8-flash (agy) | 8    | 6     | 4      | 3         | 5           | 5        | 4*          | 5     |
-| sonnet-5.5             | 8    | 9*    | 9      | 10        | 7           | 9        | 9*          | 8*    |
-| gemini-4-argon (agy)   | 8    | 9     | 8      | 6         | 9*          | 8*       | 9*          | 8*    |
-| opus-5.5               | 7    | 10    | 10     | 10        | 7           | 9        | 10*         | 10    |
-| fable-5.1              | 5    | 9     | 9      | 8         | 6           | 8        | 9*          | 9     |
-| gpt-6-astra            | 4    | 9     | 9      | 6         | 8           | 10       | 8*          | 9     |
+| model                   | cost | intel | coding | knowledge | reliability | research | design/arch | taste |
+|---                      |---   |---    |---     |---        |---          |---       |---          |---    |
+| haiku-5.5               | 10   | 5*    | 5*     | 7         | 5           | 4        | 4*          | 5*    |
+| gpt-6-luna              | 10   | 4     | 3      | 4         | 4           | 4*       | 3*          | 5     |
+| gpt-6.2-sol             | 9    | 8     | 7*     | 6*        | 7*          | 8*       | 8*          | 7*    |
+| gemini-4-hydrogen (agy) | 8*   | 7     | 7*     | 6*        | 8*          | 7*       | 6*          | 6*    |
+| sonnet-5.5              | 8    | 8*    | 9      | 10        | 7           | 8        | 9*          | 8*    |
+| gemini-4-argon (agy)    | 8    | 7     | 8      | 6         | 9*          | 7*       | 9*          | 8*    |
+| gemini-4-carbon (agy)   | 7*   | 9     | 9      | 7*        | 9           | 9*       | 9*          | 9*    |
+| opus-5.5                | 7    | 9     | 10     | 10        | 7           | 8        | 10*         | 10    |
+| fable-5.2               | 5    | 10    | 10     | 9         | 7*          | 9*       | 10*         | 10    |
+| gpt-6.2-astra           | 5    | 9     | 9      | 6*        | 7*          | 10       | 8*          | 9*    |
 
-This table is current as of October 2026 — trust it over prior
+This table is current as of November 2026 — trust it over prior
 knowledge of model lineups. Scores are the author's reading of public
 benchmarks, not measurements. *Provisional: vendor-reported only or
 inferred from a predecessor; recalibrate from `[delegated]` verdicts
-and re-score when independent results land. Independent FrontierSWE v2
-(max effort) puts fable-5.1 at 56.3, below astra 65.5, opus-5.5 62.3,
-and sonnet-5.5 61.9. gemini-4-argon (broad rollout 2026-10-13, Google
-AI Ultra plan) scores 53 on the independent Artificial Analysis index,
-has the lowest hallucination rate among top models (15%), and ranks
-first on the Vals Index and AutomationBench-AA, but trails opus-5.5
-and astra on FrontierSWE v2 (55.0) and Terminal-Bench 4.0 (57). It is
-slow (about 45 s to the first token) and verbose. Knowledge and
-reliability rank models differently: opus-5.5 and sonnet-5.5 write the
-best deliverables but guess rather than abstain (hallucination rates
-59% and 47%), while gemini-4-argon (15%) and astra lead on
-reliability. No benchmark measures orchestration (delegation, routing,
-judging other agents' output) or design directly; the `[delegated]`
-log is the best evidence for recalibrating them.
+and re-score when independent results land. New since October:
+fable-5.2 (2026-11-09) replaces fable-5.1. It leads the independent
+Artificial Analysis index (65; gpt-6.2-astra 62, gemini-4-carbon 60,
+opus-5.5 59), the Vals Index, and Agent Arena, and ties opus-5.5 on
+the Coding Agent Index v2.1 (58); opus-5.5 still writes the better
+deliverables (GDPval-AA). gpt-6.2-astra and gpt-6.2-sol (2026-11-17)
+replace gpt-6-astra and gpt-6.1-sol; they are days old and mostly
+provisional. Astra gains 5 index points at a lower price and leads
+Terminal-Bench-Science, but is flat on the Coding Agent Index and
+hallucinates at 59%, no better than opus-5.5. Sol reaches 57 on the
+index, 2 above its predecessor, but scores 3 points lower on the
+Coding Agent Index (14 lower on SWE-Atlas-QnA), hence its lower,
+provisional coding score; there is no 6.2 luna.
+gemini-4-carbon (2026-11-10, Google AI Ultra plan) beats opus-5.5 on
+Terminal-Bench (65 against 60) and rarely invents (11% hallucination
+rate). gemini-4-hydrogen (2026-11-12, AI Pro and up) replaces
+gemini-3.8-flash: 51 on the index against Flash's 31, and 57% against
+18% on Terminal-Bench 4.1 (vendor-reported), at a lower cost per
+task. Scores were rescaled to the new frontier, so models that did
+not change lost a point where fable-5.2 or gpt-6.2-astra moved the
+top of an axis.
+Independent FrontierSWE v2 (max effort): fable-5.2 69.9 (one
+aggregator, unconfirmed), gpt-6-astra 65.5, opus-5.5 62.3, sonnet-5.5
+61.9, gemini-4-carbon 61.2, gemini-4-argon 55.0. gemini-4-argon
+(index 50) is slow (about 45 s to the first token) and verbose.
+Knowledge and reliability rank models differently: opus-5.5 and
+sonnet-5.5 write the best deliverables but guess rather than abstain
+(hallucination rates 59% and 47%), as do fable-5.2 and the gpt-6.2
+models, while the Gemini 4 models abstain (argon least likely to
+invent, then hydrogen and carbon) and lead on reliability, with argon
+first on AutomationBench-AA. No benchmark measures orchestration
+(delegation, routing, judging other agents' output) or design
+directly; the `[delegated]` log is the best evidence for
+recalibrating them.
 
 Keep the judgment work for the best-fit orchestrating model: the plan,
 critical decisions, a pre-mortem of what could go wrong (put it in the
@@ -331,10 +352,10 @@ deliberately rather than inheriting yours by default.
   went. When a test harness or contract suite makes a kind of work
   strongly verifiable, later tasks of that kind can drop a tier.
 - Orchestrator: the best available one whenever budget allows:
-  opus-5.5, first on the independent Agent Arena lead-model ranking.
-  Drop to gpt-6.1-sol or fable-5.1, close behind, only when Opus
-  quota is short. Never haiku-5.5, luna, or gemini-flash: they rank
-  last by a wide margin.
+  fable-5.2, first on the independent Agent Arena lead-model ranking.
+  Drop to opus-5.5, second, when Fable quota is short, and to
+  gpt-6.2-sol only when both are. Never haiku-5.5, luna, or
+  gemini-hydrogen: the cheap tier ranks last by a wide margin.
 - Vary the orchestrator's effort freely; change its model only at a
   compaction boundary, since a new model must re-read the whole
   context. To get a stronger model's view mid-run, consult it: one
@@ -346,15 +367,18 @@ deliberately rather than inheriting yours by default.
 - Cost is a tie-breaker only; for anything that ships: the axis the
   task needs > taste > cost.
 - Bulk/mechanical work (clear-spec implementation, code migrations,
-  data analysis, read-only sweeps): gpt-6-luna or gemini-flash;
-  gpt-6.1-sol when the spec is ambiguous or the context is large.
+  data analysis, read-only sweeps): gpt-6-luna or gemini-hydrogen
+  (hydrogen when the work needs tool loops or several steps);
+  gpt-6.2-sol when the spec is ambiguous or the context is large.
 - Fact-checking, verifying, and actions run unattended need
-  reliability ≥ 7: not haiku-5.5, luna, or gemini-flash, and not
-  fable-5.1 for fact-checks. Reliability decides who may judge, not
+  reliability ≥ 7: not haiku-5.5 or luna, and not gemini-hydrogen
+  until its provisional score is confirmed.
+  Reliability decides who may judge, not
   whose word counts: an executor's report of its own work is never
   acceptance (see Using cheaper models).
-- User-facing work (UI, copy): taste ≥ 7. Functional web apps: astra
-  or opus-5.5; pure visual design: opus-5.5.
+- User-facing work (UI, copy): taste ≥ 7. Functional web apps:
+  astra, opus-5.5, or fable-5.2; pure visual design: opus-5.5 or
+  fable-5.2.
 - Plans, architecture, API design, refactors, and test design (what
   to test, and how to tell a right answer from a wrong one): use the
   highest design/arch model in the table that quota allows. Writing
@@ -367,12 +391,19 @@ deliberately rather than inheriting yours by default.
   combined design as a `[decision]` with the alternatives and why
   they lost. Different models miss different things.
 - Scientific research: astra, opus-5.5 as fallback. Web research
-  sweeps: gemini-flash (live Google search).
+  sweeps: gemini-hydrogen (live Google search).
+- "astra" and "sol" in these rules mean gpt-6.2-astra and
+  gpt-6.2-sol; "gemini-hydrogen" means gemini-4-hydrogen.
+- gemini-4-carbon is Google's frontier model: near opus-5.5 on hard
+  coding and terminal work, and reliable on facts. Use it as the
+  second vendor on hard-to-revert designs and as the code reviewer
+  when Codex quota runs out. It is new: expect tight limits, and
+  prefer argon for documents and long outputs.
 - gemini-4-argon is strong at knowledge work (specs,
   analysis, documents), factual reliability (it abstains rather than
   invents), long outputs, and image, chart, and video input. Use it as
   the second cross-vendor reviewer for plans, specs, and documents
-  (gpt-6.1-sol stays the code reviewer); for research and
+  (gpt-6.2-sol stays the code reviewer); for research and
   fact-checking where a made-up claim is costly; for knowledge
   deliverables when opus-5.5 quota is short; and as the fallback for
   review and reasoning work when Codex quota runs out. Not for
@@ -383,7 +414,7 @@ deliberately rather than inheriting yours by default.
   model in the table on the axis under review (design/arch for plans,
   coding for implementations) with reliability ≥ 7, plus one model
   from a different vendor as an independent second perspective
-  (gpt-6.1-sol for code, gemini-4-argon for plans and documents) —
+  (gpt-6.2-sol for code, gemini-4-argon for plans and documents) —
   different training catches different misses.
 - haiku-5.5 is the cheapest Claude model. Try it first on work a
   test or check can verify (see Using cheaper models); if it fails,
